@@ -14,16 +14,19 @@ namespace API_Solution.Controllers
 {
     [Route("api/capitans/{capitanId}/boats")]
     [ApiController]
-    public class BoatController : ControllerBase
+    public class BoatsController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-        public BoatController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        private readonly IDataShaper<BoatDto> _dataShaper;
+
+        public BoatsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IDataShaper<BoatDto> dataShaper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
+            _dataShaper = dataShaper;
         }
 
         [HttpGet]
@@ -38,7 +41,7 @@ namespace API_Solution.Controllers
             var boatsFromDB = await _repository.Boat.GetBoatsAsync(capitanId, boatParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(boatsFromDB.MetaData));
             var boatsDto = _mapper.Map<IEnumerable<BoatDto>>(boatsFromDB);
-            return Ok(boatsDto);
+            return Ok(_dataShaper.ShapeData(boatsDto, boatParameters.Fields));
         }
 
         [HttpGet("{id}", Name = "GetBoatForCapitan")]

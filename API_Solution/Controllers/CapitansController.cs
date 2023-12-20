@@ -11,12 +11,12 @@ namespace API_Solution.Controllers
 {
     [Route("api/capitans")]
     [ApiController]
-    public class CapitanController : ControllerBase
+    public class CapitansController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-        public CapitanController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        public CapitansController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
