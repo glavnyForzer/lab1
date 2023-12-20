@@ -15,12 +15,12 @@ namespace Entities
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
             modelBuilder.ApplyConfiguration(new BoatConfiguration());
-            modelBuilder.ApplyConfiguration(new CapitanConfiguration());
+            modelBuilder.ApplyConfiguration(new DriverConfiguration());
         }
 
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Boat> Boats { get; set; }
-        public DbSet<Capitan> Capitans { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
     }
 }

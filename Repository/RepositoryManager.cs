@@ -9,7 +9,7 @@ namespace Repository
         private ICompanyRepository _companyRepository;
         private IEmployeeRepository _employeeRepository;
         private IBoatRepository _boatRepository;
-        private ICapitanRepository _capitanRepository;
+        private ICapitanRepository _driverRepository;
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
@@ -41,13 +41,13 @@ namespace Repository
                 return _boatRepository;
             }
         }
-        public ICapitanRepository Capitan
+        public ICapitanRepository Driver
         {
             get
             {
-                if (_capitanRepository == null)
-                    _capitanRepository = new CapitanRepository(_repositoryContext);
-                return _capitanRepository;
+                if (_driverRepository == null)
+                    _driverRepository = new CapitanRepository(_repositoryContext);
+                return _driverRepository;
             }
         }
         public void Save() => _repositoryContext.SaveChanges();

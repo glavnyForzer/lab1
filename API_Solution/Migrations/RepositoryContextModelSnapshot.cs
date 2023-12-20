@@ -22,12 +22,12 @@ namespace API_Solution.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Entities.Models.Car", b =>
+            modelBuilder.Entity("Entities.Models.Boat", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CarId");
+                        .HasColumnName("BoatId");
 
                     b.Property<string>("Brend")
                         .IsRequired()
@@ -46,7 +46,7 @@ namespace API_Solution.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Boats");
 
                     b.HasData(
                         new
@@ -199,10 +199,10 @@ namespace API_Solution.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Entities.Models.Car", b =>
+            modelBuilder.Entity("Entities.Models.Boat", b =>
                 {
                     b.HasOne("Entities.Models.Driver", "Driver")
-                        .WithMany("Cars")
+                        .WithMany("Boats")
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -228,7 +228,7 @@ namespace API_Solution.Migrations
 
             modelBuilder.Entity("Entities.Models.Driver", b =>
                 {
-                    b.Navigation("Cars");
+                    b.Navigation("Boats");
                 });
 #pragma warning restore 612, 618
         }

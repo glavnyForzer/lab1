@@ -11,14 +11,15 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Boat> GetBoats(Guid capitanId, bool trackChanges) => 
-            FindByCondition(c => c.CapitanId.Equals(capitanId), trackChanges).OrderBy(e => e.Brend);
-        public Boat GetBoatById(Guid capitanId, Guid id, bool trackChanges) => FindByCondition(c => c.CapitanId.Equals(capitanId) &&
+        public IEnumerable<Boat> GetBoats(Guid driverId, bool trackChanges) => 
+            FindByCondition(c => c.DriverId.Equals(driverId), trackChanges).OrderBy(e => e.Brend);
+        public Boat GetBoatById(Guid driverId, Guid id, bool trackChanges) => FindByCondition(c => c.DriverId.Equals(driverId) &&
             c.Id.Equals(id), trackChanges).SingleOrDefault();
-        public void CreateBoatForCapitan(Guid capitanId, Boat boat)
+        public void CreateBoatForDriver(Guid driverId, Boat boat)
         {
-            boat.CapitanId = capitanId;
+            boat.DriverId = driverId;
             Create(boat);
         }
+        public void DeleteBoat(Boat boat) => Delete(boat);
     }
 }
