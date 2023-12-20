@@ -39,12 +39,12 @@ namespace API_Solution.Controllers
                 _logger.LogInfo($"Driver with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
-            var driverDto = _mapper.Map<DriverDto>(driver);
+            var driverDto = _mapper.Map<CapitanDto>(driver);
             return Ok(driverDto);
         }
 
         [HttpPost]
-        public IActionResult CreateDriver([FromBody] DriverForCreatonDto driver) 
+        public IActionResult CreateDriver([FromBody] CapitanForCreatonDto driver) 
         {
             if(driver == null)
             {
@@ -54,7 +54,7 @@ namespace API_Solution.Controllers
             var driverEntity = _mapper.Map<Driver>(driver);
             _repository.Driver.CreateDriver(driverEntity);
             _repository.Save();
-            var driverToReturn = _mapper.Map<DriverDto>(driverEntity);
+            var driverToReturn = _mapper.Map<CapitanDto>(driverEntity);
             return CreatedAtRoute("DriverById", new { id = driverToReturn.Id }, driverToReturn);
         }
 
@@ -72,7 +72,7 @@ namespace API_Solution.Controllers
                 _logger.LogError("Some ids are not valid in a collection");
                 return NotFound();
             }
-            var driversToReturn = _mapper.Map<IEnumerable<DriverDto>> (driverEntities);
+            var driversToReturn = _mapper.Map<IEnumerable<CapitanDto>> (driverEntities);
             return Ok(driversToReturn);
         }
 
@@ -90,7 +90,7 @@ namespace API_Solution.Controllers
                 _repository.Driver.CreateDriver(driver);
             }
             _repository.Save();
-            var driverCollectionToReturn = _mapper.Map<IEnumerable<DriverDto>>(driverEntitiees);
+            var driverCollectionToReturn = _mapper.Map<IEnumerable<CapitanDto>>(driverEntitiees);
             var ids = string.Join(",", driverCollectionToReturn.Select(c => c.Id));
             return CreatedAtRoute("DriverCollection", new { ids }, driverCollectionToReturn);
         }
@@ -110,7 +110,7 @@ namespace API_Solution.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCompany(Guid id, [FromBody] DriverForUpdateDto driver)
+        public IActionResult UpdateCompany(Guid id, [FromBody] CapitanForUpdateDto driver)
         {
             if (driver == null)
             { 

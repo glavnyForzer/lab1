@@ -1,6 +1,6 @@
 ﻿namespace Entities.DataTransferObjects
 {
-    public class DriverForCreatonDto
+    public class CapitanForCreatonDto
     {
         public string Name { get; set; }
         public string Address { get; set; }
