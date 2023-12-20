@@ -28,16 +28,16 @@ namespace API_Solution.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Drivers",
+                name: "Capitans",
                 columns: table => new
                 {
-                    DriverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CapitanId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Drivers", x => x.DriverId);
+                    table.PrimaryKey("PK_Capitans", x => x.CapitanId);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,16 +68,16 @@ namespace API_Solution.Migrations
                     BoatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Brend = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    DriverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CapitanId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boats", x => x.BoatId);
                     table.ForeignKey(
-                        name: "FK_Boats_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
-                        principalColumn: "DriverId",
+                        name: "FK_Boats_Capitans_CapitanId",
+                        column: x => x.CapitanId,
+                        principalTable: "Capitans",
+                        principalColumn: "CapitanId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -91,8 +91,8 @@ namespace API_Solution.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Drivers",
-                columns: new[] { "DriverId", "Address", "Name" },
+                table: "Capitans",
+                columns: new[] { "CapitanId", "Address", "Name" },
                 values: new object[,]
                 {
                     { new Guid("27feac3d-b9d9-429f-8ca4-a520513fa714"), "Volgogradskaya 74", "Denis Tkacev" },
@@ -101,7 +101,7 @@ namespace API_Solution.Migrations
 
             migrationBuilder.InsertData(
                 table: "Boats",
-                columns: new[] { "BoatId", "Brend", "DriverId", "Model" },
+                columns: new[] { "BoatId", "Brend", "CapitanId", "Model" },
                 values: new object[,]
                 {
                     { new Guid("0e6191bc-2cbb-47ab-b4f9-246a3a7ecb7d"), "Tulin", new Guid("27feac3d-b9d9-429f-8ca4-a520513fa714"), "5-series" },
@@ -119,9 +119,9 @@ namespace API_Solution.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Boats_DriverId",
+                name: "IX_Boats_CapitanId",
                 table: "Boats",
-                column: "DriverId");
+                column: "CapitanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyId",
@@ -139,7 +139,7 @@ namespace API_Solution.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Drivers");
+                name: "Capitans");
 
             migrationBuilder.DropTable(
                 name: "Companies");

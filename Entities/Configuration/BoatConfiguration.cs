@@ -14,14 +14,14 @@ namespace Entities.Configuration
                     Id = new Guid("b9e4d52a-129a-4277-a559-37600c6da2c6"),
                     Brend = "Stels",
                     Model = "A90",
-                    DriverId= new Guid("305a8736-8187-4854-8686-f6869493b302")
+                    CapitanId= new Guid("305a8736-8187-4854-8686-f6869493b302")
                 },
                 new Boat
                 {
                     Id = new Guid("0e6191bc-2cbb-47ab-b4f9-246a3a7ecb7d"),
                     Brend = "Tulin",
                     Model = "5-series",
-                    DriverId = new Guid("27feac3d-b9d9-429f-8ca4-a520513fa714")
+                    CapitanId = new Guid("27feac3d-b9d9-429f-8ca4-a520513fa714")
                 }
                 );
 

@@ -5,7 +5,7 @@
         ICompanyRepository Company { get; }
         IEmployeeRepository Employee { get; }
         IBoatRepository Boat { get; }
-        IDriverRepository Driver { get; }
+        IcapitanRepository Capitan { get; }
         void Save();
     }
 }

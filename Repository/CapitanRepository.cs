@@ -4,9 +4,9 @@ using Entities.Models;
 
 namespace Repository
 {
-    public class DriverRepository: RepositoryBase<Capitan>, IDriverRepository
+    public class CapitanRepository: RepositoryBase<Capitan>, IcapitanRepository
     {
-        public DriverRepository(RepositoryContext repositoryContext)
+        public CapitanRepository(RepositoryContext repositoryContext)
         : base(repositoryContext)        
         {
         }

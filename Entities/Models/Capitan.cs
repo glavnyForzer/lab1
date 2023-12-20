@@ -5,7 +5,7 @@ namespace Entities.Models
 {
     public class Capitan
     {
-        [Column("DriverId")]
+        [Column("CapitanId")]
         public Guid Id { get; set; }
         [Required(ErrorMessage = "Employee name is a required field.")]
         [MaxLength(30, ErrorMessage = "Maximum length for the Name is 30 characters.")]
