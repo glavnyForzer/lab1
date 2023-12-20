@@ -1,8 +1,9 @@
-﻿namespace Entities.DataTransferObjects
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities.DataTransferObjects
 {
-    public class BoatForCreationDto
+    public class BoatForCreationDto: BoatForManipulationDto
     {
-        public string Brend { get; set; }
-        public string Model { get; set; }
+
     }
 }

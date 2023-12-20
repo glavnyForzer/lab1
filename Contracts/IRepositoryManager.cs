@@ -5,7 +5,7 @@
         ICompanyRepository Company { get; }
         IEmployeeRepository Employee { get; }
         IBoatRepository Boat { get; }
-        ICapitanRepository Driver { get; }
-        void Save();
+        ICapitanRepository Capitan { get; }
+        public Task SaveAsync();
     }
 }

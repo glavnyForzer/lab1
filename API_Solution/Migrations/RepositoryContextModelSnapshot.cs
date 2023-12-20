@@ -34,7 +34,7 @@ namespace API_Solution.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<Guid>("DriverId")
+                    b.Property<Guid>("CapitanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Model")
@@ -44,7 +44,7 @@ namespace API_Solution.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DriverId");
+                    b.HasIndex("CapitanId");
 
                     b.ToTable("Boats");
 
@@ -53,14 +53,14 @@ namespace API_Solution.Migrations
                         {
                             Id = new Guid("b9e4d52a-129a-4277-a559-37600c6da2c6"),
                             Brend = "Toyota",
-                            DriverId = new Guid("305a8736-8187-4854-8686-f6869493b302"),
+                            CapitanId = new Guid("305a8736-8187-4854-8686-f6869493b302"),
                             Model = "Avensis"
                         },
                         new
                         {
                             Id = new Guid("0e6191bc-2cbb-47ab-b4f9-246a3a7ecb7d"),
                             Brend = "BMW",
-                            DriverId = new Guid("27feac3d-b9d9-429f-8ca4-a520513fa714"),
+                            CapitanId = new Guid("27feac3d-b9d9-429f-8ca4-a520513fa714"),
                             Model = "5-series"
                         });
                 });
@@ -107,12 +107,12 @@ namespace API_Solution.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Entities.Models.Driver", b =>
+            modelBuilder.Entity("Entities.Models.Capitan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DriverId");
+                        .HasColumnName("CapitanId");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -126,7 +126,7 @@ namespace API_Solution.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("Capitans");
 
                     b.HasData(
                         new
@@ -201,13 +201,13 @@ namespace API_Solution.Migrations
 
             modelBuilder.Entity("Entities.Models.Boat", b =>
                 {
-                    b.HasOne("Entities.Models.Driver", "Driver")
+                    b.HasOne("Entities.Models.Capitan", "Capitan")
                         .WithMany("Boats")
-                        .HasForeignKey("DriverId")
+                        .HasForeignKey("CapitanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Driver");
+                    b.Navigation("Capitan");
                 });
 
             modelBuilder.Entity("Entities.Models.Employee", b =>
@@ -226,7 +226,7 @@ namespace API_Solution.Migrations
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("Entities.Models.Driver", b =>
+            modelBuilder.Entity("Entities.Models.Capitan", b =>
                 {
                     b.Navigation("Boats");
                 });

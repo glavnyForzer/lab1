@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Solution.Controllers
 {
-    [Route("api/drivers")]
+    [Route("api/capitans")]
     [ApiController]
     public class CapitanController : ControllerBase
     {
@@ -23,108 +23,113 @@ namespace API_Solution.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDrivers()
+        public async Task<IActionResult> GetCapitans()
         {
-            var drivers = _repository.Driver.GetAllDrivers(trackChanges: false);
-            var driversDto = _mapper.Map<IEnumerable<Driver>>(drivers);
-            return Ok(driversDto);
+            var capitans = await _repository.Capitan.GetAllCapitansAsync(trackChanges: false);
+            var capitansDto = _mapper.Map<IEnumerable<Capitan>>(capitans);
+            return Ok(capitansDto);
         }
 
-        [HttpGet("{id}", Name = "DriverById")]
-        public IActionResult GetDriver(Guid id)
+        [HttpGet("{id}", Name = "CapitanById")]
+        public async Task<IActionResult> GetCapitanAsync(Guid id)
         {
-            var driver =_repository.Driver.GetDriver(id, trackChanges: false);
-            if(driver == null)
+            var capitan = await _repository.Capitan.GetCapitanAsync(id, trackChanges: false);
+            if(capitan == null)
             {
-                _logger.LogInfo($"Driver with id: {id} doesn't exist in the database.");
+                _logger.LogInfo($"Capitan with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
-            var driverDto = _mapper.Map<CapitanDto>(driver);
-            return Ok(driverDto);
+            var capitanDto = _mapper.Map<CapitanDto>(capitan);
+            return Ok(capitanDto);
         }
 
         [HttpPost]
-        public IActionResult CreateDriver([FromBody] CapitanForCreatonDto driver) 
+        public async Task<IActionResult> CreateCapitanAsync([FromBody] CapitanForCreatonDto capitan) 
         {
-            if(driver == null)
+            if(capitan == null)
             {
-                _logger.LogError("DriverForCreatonDto object sent from client is  null.");
-                return BadRequest("DriverForCreatonDto object is null");
+                _logger.LogError("CapitanForCreatonDto object sent from client is  null.");
+                return BadRequest("CapitanForCreatonDto object is null");
             }
-            var driverEntity = _mapper.Map<Driver>(driver);
-            _repository.Driver.CreateDriver(driverEntity);
-            _repository.Save();
-            var driverToReturn = _mapper.Map<CapitanDto>(driverEntity);
-            return CreatedAtRoute("DriverById", new { id = driverToReturn.Id }, driverToReturn);
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the BoatForCreationDto object");
+                return UnprocessableEntity(ModelState);
+            }
+            var capitanEntity = _mapper.Map<Capitan>(capitan);
+            _repository.Capitan.CreateCapitan(capitanEntity);
+            await _repository.SaveAsync();
+            var capitanToReturn = _mapper.Map<CapitanDto>(capitanEntity);
+            return CreatedAtRoute("CapitanById", new { id = capitanToReturn.Id }, capitanToReturn);
         }
 
-        [HttpGet("collection/({ids})", Name = "DriverCollection")]
-        public IActionResult GetDriverCollection(IEnumerable<Guid> ids) 
+        [HttpGet("collection/({ids})", Name = "CapitanCollection")]
+        public async Task<IActionResult> GetCapitanCollection(IEnumerable<Guid> ids) 
         {
             if (ids == null)
             {
                 _logger.LogError("Parameter ids is null");
                 return BadRequest("Parameter ids is null");
             }
-            var driverEntities = _repository.Driver.GetByIds(ids, trackChanges: true);
-            if (ids.Count() != driverEntities.Count())
+            var capitanEntities = await _repository.Capitan.GetByIdsAsync(ids, trackChanges: true);
+            if (ids.Count() != capitanEntities.Count())
             {
                 _logger.LogError("Some ids are not valid in a collection");
                 return NotFound();
             }
-            var driversToReturn = _mapper.Map<IEnumerable<CapitanDto>> (driverEntities);
-            return Ok(driversToReturn);
+            var capitansToReturn = _mapper.Map<IEnumerable<CapitanDto>> (capitanEntities);
+            return Ok(capitansToReturn);
         }
 
         [HttpPost("collection")]
-        public IActionResult CreateDriverCollection([ModelBinder (BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> driverCollection)
+        public async Task<IActionResult> CreateCapitanCollection([ModelBinder (BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> capitanCollection)
         {
-            if (driverCollection == null)
+            if (capitanCollection == null)
             {
-                _logger.LogError("Driver collection sent from client is null.");
-                return BadRequest("Driver collection is null");
+                _logger.LogError("Capitan collection sent from client is null.");
+                return BadRequest("Capitan collection is null");
             }
-            var driverEntitiees = _mapper.Map<IEnumerable<Driver>>(driverCollection);
-            foreach (var driver in driverEntitiees)
+            var capitanEntitiees = _mapper.Map<IEnumerable<Capitan>>(capitanCollection);
+            foreach (var capitan in capitanEntitiees)
             {
-                _repository.Driver.CreateDriver(driver);
+                _repository.Capitan.CreateCapitan(capitan);
             }
-            _repository.Save();
-            var driverCollectionToReturn = _mapper.Map<IEnumerable<CapitanDto>>(driverEntitiees);
-            var ids = string.Join(",", driverCollectionToReturn.Select(c => c.Id));
-            return CreatedAtRoute("DriverCollection", new { ids }, driverCollectionToReturn);
+            await _repository.SaveAsync();
+            var capitanCollectionToReturn = _mapper.Map<IEnumerable<CapitanDto>>(capitanEntitiees);
+            var ids = string.Join(",", capitanCollectionToReturn.Select(c => c.Id));
+            return CreatedAtRoute("CapitanCollection", new { ids }, capitanCollectionToReturn);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteDriver(Guid id)
+        public async Task<IActionResult> DeleteCapitan(Guid id)
         {
-            var driver = _repository.Driver.GetDriver(id, trackChanges: false);
-            if(driver == null)
+            var capitan = _repository.Capitan.GetCapitanAsync(id, trackChanges: false);
+            if(capitan == null)
             {
-                _logger.LogInfo($"Driver with id: {id} doesn't exist in the database.");
+                _logger.LogInfo($"Capitan with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
-            _repository.Driver.DeleteDriver(driver);
-            _repository.Save();
+            _repository.Capitan.DeleteCapitan(capitan.Result);
+            await _repository.SaveAsync();
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCompany(Guid id, [FromBody] CapitanForUpdateDto driver)
+        public async Task<IActionResult> UpdateCompany(Guid id, [FromBody] CapitanForUpdateDto capitan)
         {
-            if (driver == null)
+            if (capitan == null)
             { 
-                _logger.LogError("DriverForUpdateDto object sent from client is null.");
-                return BadRequest("DriverForUpdateDto object is null");
+                _logger.LogError("CapitanForUpdateDto object sent from client is null.");
+                return BadRequest("CapitanForUpdateDto object is null");
             }
-            var driverEntity = _repository.Driver.GetDriver(id, trackChanges: true);
-            if (driverEntity == null)
+            var capitanEntity =await _repository.Capitan.GetCapitanAsync(id, trackChanges: true);
+            if (capitanEntity == null)
             {
                 _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
-            _mapper.Map(driver, driverEntity);
-            _repository.Save();
+            _mapper.Map(capitan, capitanEntity);
+            await _repository.SaveAsync();
             return NoContent();
         }
     }

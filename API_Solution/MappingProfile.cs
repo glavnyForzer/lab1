@@ -11,15 +11,15 @@ namespace API_Solution
             CreateMap<Company, CompanyDto>().ForMember(c => c.FullAddress, opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
             CreateMap<Employee, EmployeeDto>();
             CreateMap<Boat, BoatDto>();
-            CreateMap<Driver, CapitanDto>();
+            CreateMap<Capitan, CapitanDto>();
             CreateMap<CompanyForCreationDto, Company>();
             CreateMap<EmployeeForCreationDto, Employee>();
-            CreateMap<CapitanForCreatonDto, Driver>();
+            CreateMap<CapitanForCreatonDto, Capitan>();
             CreateMap<BoatForCreationDto, Boat>();
             CreateMap<EmployeeForUpdateDto, Employee>();
             CreateMap<CompanyForUpdateDto, Company>();
             CreateMap<BoatForUpdateDto, Boat>();
-            CreateMap<CapitanForUpdateDto, Driver>();
+            CreateMap<CapitanForUpdateDto, Capitan>();
             CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
             CreateMap<BoatForUpdateDto, Boat>().ReverseMap();
         }

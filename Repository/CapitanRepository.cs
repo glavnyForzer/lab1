@@ -1,20 +1,21 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class CapitanRepository: RepositoryBase<Driver>, ICapitanRepository
+    public class CapitanRepository: RepositoryBase<Capitan>, ICapitanRepository
     {
         public CapitanRepository(RepositoryContext repositoryContext)
         : base(repositoryContext)        
         {
         }
 
-        public IEnumerable<Driver> GetAllDrivers(bool trackChanges) => FindAll(trackChanges).OrderBy(c => c.Name).ToList();
-        public Driver GetDriver(Guid id, bool trackChanges) => FindByCondition(c => c.Id.Equals(id), trackChanges).SingleOrDefault();
-        public void CreateDriver(Driver driver) => Create(driver);
-        public IEnumerable<Driver> GetByIds(IEnumerable<Guid> ids, bool trackChanges) => FindByCondition(x => ids.Contains(x.Id), trackChanges).ToList();
-        public void DeleteDriver(Driver driver) => Delete(driver);
+        public async Task<IEnumerable<Capitan>> GetAllCapitansAsync(bool trackChanges) => await FindAll(trackChanges).OrderBy(c => c.Name).ToListAsync();
+        public async Task<Capitan> GetCapitanAsync(Guid id, bool trackChanges) => await FindByCondition(c => c.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
+        public void CreateCapitan(Capitan capitan) => Create(capitan);
+        public async Task<IEnumerable<Capitan>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) => await FindByCondition(x => ids.Contains(x.Id), trackChanges).ToListAsync();
+        public void DeleteCapitan(Capitan capitan) => Delete(capitan);
     }
 }

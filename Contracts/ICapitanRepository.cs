@@ -4,10 +4,10 @@ namespace Contracts
 {
     public interface ICapitanRepository
     {
-        IEnumerable<Driver> GetAllDrivers(bool trackChanges);
-        public Driver GetDriver(Guid id, bool trackChanges);
-        void CreateDriver(Driver driver);       
-        IEnumerable<Driver> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
-        void DeleteDriver(Driver driver);
+        Task<IEnumerable<Capitan>> GetAllCapitansAsync(bool trackChanges);
+        public Task<Capitan> GetCapitanAsync(Guid id, bool trackChanges);
+        void CreateCapitan(Capitan capitan);       
+        Task<IEnumerable<Capitan>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges);
+        void DeleteCapitan(Capitan capitan);
     }
 }
