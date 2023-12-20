@@ -6,5 +6,6 @@ namespace Contracts
     {
         IEnumerable<Boat> GetBoats(Guid capitanId, bool trackChanges);
         Boat GetBoatById(Guid capitanId, Guid boatId, bool trackChanges);
+        void CreateBoatForCapitan(Guid capitanId, Boat boat);
     }
 }

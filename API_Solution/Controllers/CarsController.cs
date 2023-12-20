@@ -35,7 +35,7 @@ namespace API_Solution.Controllers
             return Ok(boatsDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetBoatForCapitan")]
         public ActionResult GetBoatWithHelpCapitan(Guid capitanId, Guid id)
         {
             var capitan = _repository.Capitan.GetCapitan(capitanId, trackChanges: false);
@@ -52,6 +52,27 @@ namespace API_Solution.Controllers
             }
             var boatDto = _mapper.Map<BoatDto>(boatDB);
             return Ok(boatDto);
+        }
+
+        [HttpPost]
+        public IActionResult CreateBoatForCapitan(Guid capitanId, [FromBody] BoatForCreationDto boat)
+        {
+            if (boat == null)
+            {
+                _logger.LogError("BoatForCreationDto object sent from client is  null.");
+                return BadRequest("BoatForCreationDto object is null");
+            }
+            var capitan = _repository.Capitan.GetCapitan(capitanId, trackChanges: false);
+            if(capitan == null)
+            {
+                _logger.LogInfo($"Capitan with id: {capitanId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var boatEntity = _mapper.Map<Boat>(boat);
+            _repository.Boat.CreateBoatForCapitan(capitanId,boatEntity);
+            _repository.Save();
+            var boatToReturn = _mapper.Map<BoatDto>(boatEntity);
+            return CreatedAtRoute("GetBoatForCapitan", new { capitanId, id = boatToReturn.Id }, boatToReturn);
         }
     }
 }

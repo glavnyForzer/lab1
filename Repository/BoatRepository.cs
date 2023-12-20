@@ -15,5 +15,10 @@ namespace Repository
             FindByCondition(c => c.CapitanId.Equals(capitanId), trackChanges).OrderBy(e => e.Brend);
         public Boat GetBoatById(Guid capitanId, Guid id, bool trackChanges) => FindByCondition(c => c.CapitanId.Equals(capitanId) &&
             c.Id.Equals(id), trackChanges).SingleOrDefault();
+        public void CreateBoatForCapitan(Guid capitanId, Boat boat)
+        {
+            boat.CapitanId = capitanId;
+            Create(boat);
+        }
     }
 }
