@@ -1,4 +1,5 @@
-﻿using API_Solution.ModelBinders;
+﻿using API_Solution.ActionFilters;
+using API_Solution.ModelBinders;
 using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
@@ -44,18 +45,9 @@ namespace API_Solution.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCapitanAsync([FromBody] CapitanForCreatonDto capitan) 
-        {
-            if(capitan == null)
-            {
-                _logger.LogError("CapitanForCreatonDto object sent from client is  null.");
-                return BadRequest("CapitanForCreatonDto object is null");
-            }
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Invalid model state for the BoatForCreationDto object");
-                return UnprocessableEntity(ModelState);
-            }
+        {            
             var capitanEntity = _mapper.Map<Capitan>(capitan);
             _repository.Capitan.CreateCapitan(capitanEntity);
             await _repository.SaveAsync();
@@ -101,33 +93,21 @@ namespace API_Solution.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateCapitanExistsAtribute))]
         public async Task<IActionResult> DeleteCapitan(Guid id)
         {
-            var capitan = _repository.Capitan.GetCapitanAsync(id, trackChanges: false);
-            if(capitan == null)
-            {
-                _logger.LogInfo($"Capitan with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
-            _repository.Capitan.DeleteCapitan(capitan.Result);
+            var capitan = HttpContext.Items["capitan"] as Capitan;
+            _repository.Capitan.DeleteCapitan(capitan);
             await _repository.SaveAsync();
             return NoContent();
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateCapitanExistsAtribute))]
         public async Task<IActionResult> UpdateCompany(Guid id, [FromBody] CapitanForUpdateDto capitan)
-        {
-            if (capitan == null)
-            { 
-                _logger.LogError("CapitanForUpdateDto object sent from client is null.");
-                return BadRequest("CapitanForUpdateDto object is null");
-            }
-            var capitanEntity =await _repository.Capitan.GetCapitanAsync(id, trackChanges: true);
-            if (capitanEntity == null)
-            {
-                _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
+        {            
+            var capitanEntity = HttpContext.Items["capitan"] as Capitan;
             _mapper.Map(capitan, capitanEntity);
             await _repository.SaveAsync();
             return NoContent();
