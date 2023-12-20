@@ -9,7 +9,7 @@ namespace Repository
         private ICompanyRepository _companyRepository;
         private IEmployeeRepository _employeeRepository;
         private IBoatRepository _boatRepository;
-        private IcapitanRepository _capitanRepository;
+        private ICapitanRepository _capitanRepository;
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
@@ -41,7 +41,7 @@ namespace Repository
                 return _boatRepository;
             }
         }
-        public IcapitanRepository Capitan
+        public ICapitanRepository Capitan
         {
             get
             {
