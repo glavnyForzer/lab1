@@ -49,7 +49,7 @@ public class Startup
         services.AddScoped<ValidateBoatForCapitanExistsAttribute>();
         services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
         services.AddScoped<IDataShaper<BoatDto>, DataShaper<BoatDto>>();
-
+        services.ConfigureVersioning();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

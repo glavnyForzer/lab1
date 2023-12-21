@@ -11,12 +11,12 @@ namespace API_Solution.Controllers
 {
     [Route("api/capitans")]
     [ApiController]
-    public class CapitansController : ControllerBase
+    public class CapitanController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-        public CapitansController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        public CapitanController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
@@ -111,6 +111,13 @@ namespace API_Solution.Controllers
             _mapper.Map(capitan, capitanEntity);
             await _repository.SaveAsync();
             return NoContent();
+        }
+
+        [HttpOptions]
+        public IActionResult GetCapitansOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+            return Ok();
         }
     }
 }

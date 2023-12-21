@@ -30,6 +30,7 @@ namespace API_Solution.Controllers
         }
 
         [HttpGet]
+        [HttpHead]
         public async Task<ActionResult> GetBoatsWithHelpCapitan(Guid capitanId, [FromQuery] BoatParameters boatParameters)
         {
             var capitan = await _repository.Capitan.GetCapitanAsync(capitanId, trackChanges: false);
