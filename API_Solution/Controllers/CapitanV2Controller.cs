@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Solution.Controllers
 {
+    [ApiVersion("2.0")]
     [Route("api/capitans")]
     [ApiController]
-    public class CapitansV2Controller : ControllerBase
+    public class CapitanV2Controller : ControllerBase
     {
         private readonly IRepositoryManager _repository;
-        public CapitansV2Controller(IRepositoryManager repository)
+        public CapitanV2Controller(IRepositoryManager repository)
         {
             _repository = repository;
         }

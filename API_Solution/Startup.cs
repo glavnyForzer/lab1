@@ -5,6 +5,7 @@ using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using Repository;
 using Repository.DataShaping;
 
 namespace ShopApi;
@@ -22,6 +23,7 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+
         services.ConfigureCors();
         services.ConfigureIISIntegration();
         services.ConfigureLoggerService();
@@ -29,7 +31,10 @@ public class Startup
         services.ConfigureRepositoryManager();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {           
+            options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+        });
         services.AddAutoMapper(typeof(Startup));
         services.AddControllers(config =>
         {
@@ -50,6 +55,11 @@ public class Startup
         services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
         services.AddScoped<IDataShaper<BoatDto>, DataShaper<BoatDto>>();
         services.ConfigureVersioning();
+        services.AddAuthentication();
+        services.ConfigureIdentity();
+        services.ConfigureJWT(Configuration);
+        services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,7 +82,7 @@ public class Startup
         });
 
         app.UseRouting();
-
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

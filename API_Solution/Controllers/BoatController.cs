@@ -14,14 +14,14 @@ namespace API_Solution.Controllers
 {
     [Route("api/capitans/{capitanId}/boats")]
     [ApiController]
-    public class BoatsController : ControllerBase
+    public class BoatController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IDataShaper<BoatDto> _dataShaper;
 
-        public BoatsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IDataShaper<BoatDto> dataShaper)
+        public BoatController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IDataShaper<BoatDto> dataShaper)
         {
             _repository = repository;
             _logger = logger;

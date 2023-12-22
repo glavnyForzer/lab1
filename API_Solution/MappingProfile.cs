@@ -22,6 +22,7 @@ namespace API_Solution
             CreateMap<CapitanForUpdateDto, Capitan>();
             CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
             CreateMap<BoatForUpdateDto, Boat>().ReverseMap();
+            CreateMap<UserForRegistrationDto, User>();
         }
     }
 }
