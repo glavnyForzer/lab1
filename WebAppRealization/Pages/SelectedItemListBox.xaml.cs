@@ -37,9 +37,9 @@ namespace WebAppIImpl.Pages
             listBox.ItemTemplate = dataTemplate;
             listBox.SelectedItem = null;
             
-            UpdateButton.Content = "Обновить водителя и добавить авто";
-            DeleteButton.Content = "Удалить водителя";
-            DeleteBoatModelOrEmployeeButton.Content = "Удалить выбранное авто";
+            UpdateButton.Content = "Обновить копитана и добавить Лодку";
+            DeleteButton.Content = "Удалить копитана";
+            DeleteBoatModelOrEmployeeButton.Content = "Удалить выбранную лодку";
         }
         public SelectedItemListBox(CompanyModel? _companyModel)
         {

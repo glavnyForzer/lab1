@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GY0xpWEAWbHon8tny4Esz32CcMsXKCHCxiQbTWvI5VCZZNdK87d/7iI9RKQ/nY9EV2pzlvT8Gz3b0I7w725ehQ==",
+  "dgSpecHash": "4xgAxjUZNgrTEWsBPhDH2XdEiSk9NIh7R+hTCcUzMmTGAjygP3rQDjD6UQMZ9gHXdVFm7Rpcckqsw/kvdJkpQQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\WebApiRealization-master\\WebAppRealization\\WebApIRealization.csproj",
+  "projectFilePath": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\lab1\\WebAppRealization\\WebApIRealization.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\huawe\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],

@@ -56,11 +56,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\WebApiRealization-master\\WebAppRealization\\WebApIRealization.csproj",
+      "projectUniqueName": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\lab1\\WebAppRealization\\WebApIRealization.csproj",
       "projectName": "WebApIRealization",
-      "projectPath": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\WebApiRealization-master\\WebAppRealization\\WebApIRealization.csproj",
+      "projectPath": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\lab1\\WebAppRealization\\WebApIRealization.csproj",
       "packagesPath": "C:\\Users\\huawe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\WebApiRealization-master\\WebAppRealization\\obj\\",
+      "outputPath": "C:\\Users\\huawe\\OneDrive\\Рабочий стол\\lab1\\WebAppRealization\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\huawe\\AppData\\Roaming\\NuGet\\NuGet.Config",
