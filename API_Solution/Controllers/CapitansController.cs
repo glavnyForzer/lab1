@@ -12,18 +12,24 @@ namespace API_Solution.Controllers
     [ApiVersion("1.0")]
     [Route("api/capitans")]
     [ApiController]
-    public class CapitanController : ControllerBase
+    [ApiExplorerSettings(GroupName = "v1")]
+
+    public class CapitansController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-        public CapitanController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        public CapitansController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Получает список всех водителей
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetCapitans()
         {
@@ -32,6 +38,11 @@ namespace API_Solution.Controllers
             return Ok(capitansDto);
         }
 
+        /// <summary>
+        /// Получает водителя по Id
+        /// </summary>
+        /// <param name="id">Id водителя</param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "CapitanById")]
         public async Task<IActionResult> GetCapitanAsync(Guid id)
         {
@@ -45,6 +56,11 @@ namespace API_Solution.Controllers
             return Ok(capitanDto);
         }
 
+        /// <summary>
+        /// Создает водителя
+        /// </summary>
+        /// <param name="capitan">Экземпляр нового водителя</param>
+        /// <returns></returns>
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCapitanAsync([FromBody] CapitanForCreatonDto capitan) 
@@ -56,6 +72,11 @@ namespace API_Solution.Controllers
             return CreatedAtRoute("CapitanById", new { id = capitanToReturn.Id }, capitanToReturn);
         }
 
+        /// <summary>
+        /// Получает список водителей по их Id
+        /// </summary>
+        /// <param name="ids">Id водителей которых хотим получить</param>
+        /// <returns></returns>
         [HttpGet("collection/({ids})", Name = "CapitanCollection")]
         public async Task<IActionResult> GetCapitanCollection(IEnumerable<Guid> ids) 
         {
@@ -74,6 +95,11 @@ namespace API_Solution.Controllers
             return Ok(capitansToReturn);
         }
 
+        /// <summary>
+        /// Создает список водителей
+        /// </summary>
+        /// <param name="capitanCollection">Коллекция новых водителей</param>
+        /// <returns></returns>
         [HttpPost("collection")]
         public async Task<IActionResult> CreateCapitanCollection([ModelBinder (BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> capitanCollection)
         {
@@ -93,6 +119,11 @@ namespace API_Solution.Controllers
             return CreatedAtRoute("CapitanCollection", new { ids }, capitanCollectionToReturn);
         }
 
+        /// <summary>
+        /// Удаляет водителя по Id
+        /// </summary>
+        /// <param name="id">Id водителя которого удаляем</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateCapitanExistsAtribute))]
         public async Task<IActionResult> DeleteCapitan(Guid id)
@@ -103,6 +134,12 @@ namespace API_Solution.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Редактирует водителя по Id
+        /// </summary>
+        /// <param name="id">Id водителя которого редактируем</param>
+        /// <param name="capitan">Экземпляр редактированного водителя</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCapitanExistsAtribute))]

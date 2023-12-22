@@ -1,4 +1,7 @@
-﻿using API_Solution.ActionFilters;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using API_Solution.ActionFilters;
 using API_Solution.ModelBinders;
 using AutoMapper;
 using Contracts;
@@ -14,14 +17,14 @@ namespace API_Solution.Controllers
 {
     [Route("api/capitans/{capitanId}/boats")]
     [ApiController]
-    public class BoatController : ControllerBase
+    public class BoatsController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IDataShaper<BoatDto> _dataShaper;
 
-        public BoatController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IDataShaper<BoatDto> dataShaper)
+        public BoatsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IDataShaper<BoatDto> dataShaper)
         {
             _repository = repository;
             _logger = logger;
@@ -29,9 +32,15 @@ namespace API_Solution.Controllers
             _dataShaper = dataShaper;
         }
 
+        /// <summary>
+        /// Получает список всех машин для определенного водителя
+        /// </summary>
+        /// <param name="capitanId">Id водителя</param>
+        /// <param name="boatParameters">Параметры для частичных результатов запроса</param>
+        /// <returns></returns>
         [HttpGet]
         [HttpHead]
-        public async Task<ActionResult> GetBoatsWithHelpCapitan(Guid capitanId, [FromQuery] BoatParameters boatParameters)
+        public async Task<ActionResult> GetBoatsWithHelpCapitan(Guid capitanId, [FromQuery] Parameters boatParameters)
         {
             var capitan = await _repository.Capitan.GetCapitanAsync(capitanId, trackChanges: false);
             if(capitan == null)
@@ -45,6 +54,12 @@ namespace API_Solution.Controllers
             return Ok(_dataShaper.ShapeData(boatsDto, boatParameters.Fields));
         }
 
+        /// <summary>
+        /// Получает определенную машину для определенного водителя
+        /// </summary>
+        /// <param name="capitanId">Id водителя</param>
+        /// <param name="id">Id машины которую хотим получить</param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetBoatForCapitan")]
         public async Task<ActionResult> GetBoatWithHelpCapitan(Guid capitanId, Guid id)
         {
@@ -64,6 +79,12 @@ namespace API_Solution.Controllers
             return Ok(boatDto);
         }
 
+        /// <summary>
+        /// Создает машину для определенного водителя
+        /// </summary>
+        /// <param name="capitanId">Id водителя</param>
+        /// <param name="boat">"Экземпляр новой машины</param>
+        /// <returns></returns>
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateBoatForCapitanAsync(Guid capitanId, [FromBody] BoatForCreationDto boat)
@@ -81,6 +102,12 @@ namespace API_Solution.Controllers
             return CreatedAtRoute("GetBoatForCapitan", new { capitanId, id = boatToReturn.Id }, boatToReturn);
         }
 
+        /// <summary>
+        /// Удаляет определенную машину для определенного водителя
+        /// </summary>
+        /// <param name="capitanId">Id водителя</param>
+        /// <param name="id">Id машины которую хотим удалить</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateBoatForCapitanExistsAttribute))]
         public async Task<IActionResult> DeleteBoatForCapitan(Guid capitanId, Guid id) 
@@ -91,6 +118,13 @@ namespace API_Solution.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Редактирует определенную машину для определенного водителя
+        /// </summary>
+        /// <param name="capitanId">Id водителя</param>
+        /// <param name="id">Id машины которую редактируем</param>
+        /// <param name="boat">Экземпляр редактированной машины</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateBoatForCapitanExistsAttribute))]
@@ -102,6 +136,13 @@ namespace API_Solution.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Редактирует определенную машину для определенного водителя
+        /// </summary>
+        /// <param name="capitanId">Id водителя</param>
+        /// <param name="id">Id машины которую редактируем</param>
+        /// <param name="patchDoc">Параметры для patch запроса</param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         [ServiceFilter(typeof(ValidateBoatForCapitanExistsAttribute))]
         public async Task<IActionResult> PartiallyUpdateBoatForCapitan(Guid capitanId, Guid id, [FromBody] JsonPatchDocument<BoatForUpdateDto> patchDoc)

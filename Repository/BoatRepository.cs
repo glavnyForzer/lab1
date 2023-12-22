@@ -14,7 +14,7 @@ namespace Repository
         {
         }
 
-        public async Task<PagedList<Boat>> GetBoatsAsync(Guid capitanId, BoatParameters boatParameters, bool trackChanges)
+        public async Task<PagedList<Boat>> GetBoatsAsync(Guid capitanId, Parameters boatParameters, bool trackChanges)
         {
             var boats = await FindByCondition(c => c.CapitanId.Equals(capitanId), trackChanges).Search(boatParameters.SearchTerm).Sort(boatParameters.OrderBy).ToListAsync();
             return PagedList<Boat>.ToPagedList(boats, boatParameters.PageNumber, boatParameters.PageSize);
